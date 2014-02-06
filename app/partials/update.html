@@ -1,0 +1,20 @@
+<h2>Update guest information</h2>
+<form ng-submit="submitUpdate()">
+  <p>
+    <label>Id:</label>
+    <input type="text" ng-model="message.id" disabled="true" />
+  </p>
+  <p>
+    <label>First:</label>
+    <input type="text" ng-model="message.first" autofocus="true" />
+  </p>
+  <p>
+    <label>Last:</label>
+    <input type="text"  ng-model="message.last" />
+  </p>
+  <p>
+    <label>Message:</label>
+    <input type="text"  ng-model="message.msg" />
+  </p>
+  <input type="submit" class="btn" />
+</form>

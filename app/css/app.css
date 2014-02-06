@@ -1,0 +1,13 @@
+body {
+	padding: 40px 15px;
+}
+.status {
+  color: blue;
+  padding: 1em;
+  height: 1em;
+}
+
+.img-size{
+ width: 5em;
+ height: 5em;
+}

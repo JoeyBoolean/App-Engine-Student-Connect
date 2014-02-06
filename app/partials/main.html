@@ -1,0 +1,19 @@
+<h2>Message list</h2>
+<button ng-click="invite()">Create a new message</button>
+<div class="well well-sm" ng-repeat="message in messages | orderBy:'last' | orderBy:'first'">
+	<div class="media">
+	<img class="img-rounded img-size pull-left" src="http://www.channelv.in/images/default-profile.jpg">
+		<div class="media-body pull-left">
+
+			<div class="media-heading">
+				{{ $index + 1 }}. <b>{{ message.first }} {{ message.last }}</b>
+			</div>
+			<p> {{message.msg}}</p>
+			<div class="btn-group">
+	  			<button class="btn btn-danger btn-sm"ng-click="delete(message)"><span class="glyphicon glyphicon-trash"></span></button>
+	  			<button class="btn btn-info btn-sm"ng-click="update(message)">update</button>
+	  		</div>
+  		</div>
+  	</div>
+  
+</div>
