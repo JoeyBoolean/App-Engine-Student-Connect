@@ -8,6 +8,9 @@ import model
 def AsDict(message):
   return {'id': message.key.id(), 'first': message.first, 'last': message.last, 'msg': message.msg}
 
+def AsDictUser(user):
+  return {'id': user.key.id(), 'first': user.first, 'last': user.last}
+
 
 class RestHandler(webapp2.RequestHandler):
 
@@ -46,6 +49,14 @@ class InsertHandler(RestHandler):
     r = AsDict(message)
     self.SendJson(r)
 
+class InsertUserHandler(RestHandler):
+
+  def post(self):
+    r = json.loads(self.request.body)
+    user = model.InsertUser(r['first'], r['last'])
+    r = AsDictUser(user)
+    self.SendJson(r)
+
 class DeleteHandler(RestHandler):
 
 
@@ -59,6 +70,7 @@ APP = webapp2.WSGIApplication([
     ('/rest/insert', InsertHandler),
     ('/rest/delete', DeleteHandler),
     ('/rest/update', UpdateHandler),
+    ('/rest/insert_user', InsertUserHandler),
 ], debug=True)
 
 

@@ -29,7 +29,7 @@ App.factory('messageService', function($rootScope, $http, $q, $log) { //guestSer
 });
 
 App.config(function($routeProvider) {
-  $routeProvider.when('/', {
+  $routeProvider.when('/home', {
     controller : 'MainCtrl',
     templateUrl: '/partials/main.html',
     resolve    : { 'messageService': 'messageService' },
@@ -43,13 +43,36 @@ App.config(function($routeProvider) {
     templateUrl: '/partials/update.html',
     resolve    : { 'messageService': 'messageService' },
   });
+  $routeProvider.when('/user', {
+    controller : 'UserCtrl',
+    templateUrl: '/partials/user.html',
+  });
   $routeProvider.otherwise({
-    redirectTo : '/'
+    redirectTo : '/home'
   });
 });
 
 App.config(function($httpProvider) {
   $httpProvider.interceptors.push('myHttpInterceptor');
+});
+
+App.controller('UserCtrl', function($scope, $rootScope, $log, $http, $routeParams, $location, $route) {
+
+  $scope.newUser = function(user) {
+    var user = {
+      first : $scope.first,
+      last : $scope.last,
+    };
+    $rootScope.status = 'Adding new user... ';
+    $http.post('/rest/insert_user', user)
+    .success(function(data, status, headers, config){
+      //$rootScope.user.push(data);
+      $rootScope.status = 'success';
+      $rootScope.status = '';
+    });
+    $location.path('/home');
+
+  };
 });
 
 App.controller('MainCtrl', function($scope, $rootScope, $log, $http, $routeParams, $location, $route) {
@@ -92,7 +115,7 @@ App.controller('InsertCtrl', function($scope, $rootScope, $log, $http, $routePar
       $rootScope.messages.push(data);
       $rootScope.status = '';
     });
-    $location.path('/');
+    $location.path('/home');
   }
 });
 
@@ -117,7 +140,7 @@ App.controller('UpdateCtrl', function($routeParams, $rootScope, $scope, $log, $h
       $rootScope.messages.push(data);
       $rootScope.status = '';
     });
-    $location.path('/');
+    $location.path('/home');
   };
 
 });

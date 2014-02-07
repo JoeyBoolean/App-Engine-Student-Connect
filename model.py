@@ -17,11 +17,23 @@ def UpdateMessage(id, first, last, msg): #UpdateGuest
 
 
 def InsertMessage(first, last, msg): #InsertGueset
-  guest = Message(first=first, last=last, msg=msg)
-  guest.put()
-  return guest
+  message = Message(first=first, last=last, msg=msg)
+  message.put()
+  return message
 
 
 def DeleteMessage(id): #DeleteGuest
   key = ndb.Key(Message, id)
   key.delete()
+
+class User(ndb.Model):
+  first =ndb.StringProperty()
+  last = ndb.StringProperty()
+
+def AllUsers():
+  return User.query()
+
+def InsertUser(first, last):
+  user = User(first=first, last=last)
+  user.put()
+  return user
