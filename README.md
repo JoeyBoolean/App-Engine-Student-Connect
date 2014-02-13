@@ -1,4 +1,4 @@
-**Student Connect App**
+***Student Connect App***
 ----
 This is a version of the Student COnnect App for Wichita State University. The app is written in AngularJS, Bootstrap, and Python and powered by Google App Engine. 
 
