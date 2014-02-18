@@ -28,6 +28,18 @@ App.factory('messageService', function($rootScope, $http, $q, $log) { //guestSer
   return deferred.promise;
 });
 
+App.factory('nameService', function($rootScope, $http, $q, $log) { //guestService
+  $rootScope.status = 'Retrieving name...';
+  var deferred = $q.defer();
+  $http.get('rest/query-name' + )
+  .success(function(data, status, headers, config) {
+    $rootScope.name = data;
+    deferred.resolve();
+    $rootScope.status = '';
+  });
+  return deferred.promise;
+});
+
 App.config(function($routeProvider) {
   $routeProvider.when('/home', {
     controller : 'MainCtrl',
