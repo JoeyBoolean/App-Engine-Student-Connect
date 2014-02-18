@@ -3,7 +3,8 @@
 <button ng-click="invite()">Create a new message</button>
 <div class="well well-sm" ng-repeat="message in messages | orderBy:'last' | orderBy:'first'">
 	<div class="media">
-	<img class="img-rounded img-size pull-left" src="http://www.channelv.in/images/default-profile.jpg">
+	<div class="pull-left thumbnail"><span class="glyphicon glyphicon-user img-size"></span></div>
+	<!--<img class="img-rounded img-size pull-left thumbnail" src="http://www.channelv.in/images/default-profile.jpg"><!---->
 		<div class="media-body pull-left">
 
 			<div class="media-heading">
@@ -16,5 +17,4 @@
 	  		</div>
   		</div>
   	</div>
-  
 </div>
