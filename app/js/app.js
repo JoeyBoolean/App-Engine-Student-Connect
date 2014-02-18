@@ -31,9 +31,9 @@ App.factory('messageService', function($rootScope, $http, $q, $log) { //guestSer
 App.factory('nameService', function($rootScope, $http, $q, $log) { //guestService
   $rootScope.status = 'Retrieving name...';
   var deferred = $q.defer();
-  $http.get('rest/query-name' + )
+  $http.get('rest/query-name')
   .success(function(data, status, headers, config) {
-    $rootScope.name = data;
+    $rootScope.usernames = data;
     deferred.resolve();
     $rootScope.status = '';
   });
