@@ -45,7 +45,7 @@ App.config(function($routeProvider) {
   });
   $routeProvider.when('/user', {
     controller : 'UserCtrl',
-    templateUrl: '/partials/user.html',
+    templateUrl: '/partials/signin.html',
   });
   $routeProvider.otherwise({
     redirectTo : '/home'
