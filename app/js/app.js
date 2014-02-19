@@ -25,6 +25,12 @@ App.factory('messageService', function($rootScope, $http, $q, $log) { //guestSer
     deferred.resolve();
     $rootScope.status = '';
   });
+  $http.get('rest/query-user')
+  .success(function(data, status, headers, config) {
+    $rootScope.usernames = data;
+    deferred.resolve();
+    $rootScope.status = '';
+  });
   return deferred.promise;
 });
 

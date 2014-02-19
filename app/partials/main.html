@@ -1,5 +1,8 @@
 <h2>Message list</h2>
 
+<div ng-repeat="name in usernames">
+	<p> {{name.first}} {{name.last}}</p>
+</div>
 <button ng-click="invite()">Create a new message</button>
 <div class="well well-sm" ng-repeat="message in messages | orderBy:'last' | orderBy:'first'">
 	<div class="media">

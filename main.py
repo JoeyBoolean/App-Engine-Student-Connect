@@ -68,7 +68,7 @@ class UserQueryHandler(RestHandler):
 
   def get(self):
     users = model.AllUsers()
-    r = [ AsUserDict(user) for user in users ]
+    r = [ AsDictUser(user) for user in users ]
     self.SendJson(r)
 
 
