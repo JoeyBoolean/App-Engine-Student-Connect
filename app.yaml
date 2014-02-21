@@ -9,6 +9,10 @@ handlers:
   static_files: favicon.ico
   upload: favicon\.ico
 
+- url: /background\.jpg
+  static_files: background.jpg
+  upload: background\.jpg
+
 - url: /rest/.*
   script: main.APP
 
