@@ -1,0 +1,26 @@
+{"user":
+	{
+		"name":"Joey Bachand",
+		"imgage": "url.com/324234",
+		"id": "1231242345"
+	}
+
+	{"classes":
+		[
+			{
+				"name":"Intro to Scohool",
+				"CRN":"12342",
+				"professor":"Dr. Skinner",
+				"time": "MW 5:10-6:10",
+				"key":"123124"
+			},
+			{
+				"name":"Intro to Art",
+				"CRN":"12552",
+				"professor":"Dr. Skippy",
+				"time": "TR 5:10-6:10",
+				"key": "2353245"
+			}
+		]
+	}
+}

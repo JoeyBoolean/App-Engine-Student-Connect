@@ -1,0 +1,29 @@
+{
+	"Messages":
+		[
+			{
+				"user":
+					{
+						"name":"Joey Bachand",
+						"imgage": "url.com/324234",
+						"id": "1231242345"
+					},
+				"message":"This is fun!",
+				"message_id":"234645667",
+				"date":"unix time",
+				"class_name":"Something"
+			},
+			{
+				"user":
+					{
+						"name":"Joey Smith",
+						"imgage": "url.com/3234",
+						"id": "12999992345"
+					},
+				"message":"This is fun!",
+				"message_id":"2340000067",
+				"date":"unix time",
+				"class_name": "something"
+			}
+		]
+}
