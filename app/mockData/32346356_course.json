@@ -1,0 +1,29 @@
+{
+   "Messages":
+      [
+         {
+            "user":
+               {
+                  "name":"Honest Abe",
+                  "image":"url.com/978349",
+                  "id":"9736229709"
+               },
+            "message":"I've got an amazing idea for a project.",
+            "message_id":"938546",
+            "date":"397295",
+            "class_name":"Senior Design"
+         },
+         {
+            "user":
+               {
+                  "name":"George Washington",
+                  "image":"url.com/324234",
+                  "id":"1231242345"
+               },
+            "message":"Sweet!",
+            "message_id":"847686",
+            "date":"329838",
+            "class_name":"Senior Design"
+         }
+   ]
+}

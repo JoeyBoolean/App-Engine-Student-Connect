@@ -1,0 +1,17 @@
+{
+   "Messages":
+      [
+         {
+            "user":
+               {
+                  "name":"Honest Abe",
+                  "image":"url.com/978349",
+                  "id":"9736229709"
+               },
+            "message":"Sir Cort Godfrey of the Nessie Alliance summoned the help of Scotland's local wizards to cast a protective spell over the lake and its local residents and all those who seek for the peaceful existence of our underwater ally. ",
+            "message_id":"879631",
+            "date":"081923",
+            "class_name":"Underwater Basket Weaving"
+         }
+   ]
+}

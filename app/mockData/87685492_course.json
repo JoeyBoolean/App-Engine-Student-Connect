@@ -1,0 +1,41 @@
+{
+   "Messages":
+      [
+         {
+            "user":
+               {
+                  "name":"George Washington",
+                  "image":"url.com/324234",
+                  "id":"1231242345"
+               },
+            "message":"I wish I were a robot, beep boop.",
+            "message_id":"843985",
+            "date":"834325",
+            "class_name":"Princples of Artificial Intelligence"
+         },
+         {
+            "user":
+               {
+                  "name":"Honest Abe",
+                  "image":"url.com/978349",
+                  "id":"9736229709"
+               },
+            "message":"That would be awesome!",
+            "message_id":"983622",
+            "date":"759386",
+            "class_name":"Princples of Artificial Intelligence"
+         },
+         {
+            "user":
+               {
+                  "name":"George Washington",
+                  "image":"url.com/324234",
+                  "id":"1231242345"
+               },
+            "message":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vitae suscipit purus, a lobortis mauris. Proin hendrerit pellentesque tortor id tristique. Quisque tempor volutpat feugiat. Ut id nunc consectetur purus ullamcorper varius nec in ante. Duis condimentum neque eu fringilla hendrerit. Donec tempor tortor at feugiat viverra. Donec quam dolor, posuere sed sem vitae, porttitor congue sapien. Sed ut bibendum eros. Cras quis libero sit amet eros tempor aliquet a vitae erat. Suspendisse sed nulla velit.",
+            "message_id":"832986",
+            "date":"650912",
+            "class_name":"Princples of Artificial Intelligence"
+         }
+   ]
+}

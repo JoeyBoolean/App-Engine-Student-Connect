@@ -1,0 +1,17 @@
+{
+   "Messages":
+      [
+         {
+            "user":
+               {
+                  "name":"George Washington",
+                  "image":"url.com/324234",
+                  "id":"1231242345"
+               },
+            "message":"Domo arigato.",
+            "message_id":"982958",
+            "date":"849285",
+            "class_name":"Advanced Japanese"
+         }
+   ]
+}

@@ -1,0 +1,41 @@
+{"user":
+   {
+      "name":"Honest Abe",
+      "image":"url.com/978349",
+      "id":"9736229709"
+   }
+
+   {"classes":
+      [
+         {
+            "name":"Senior Design",
+            "CRN":"62355",
+            "professor":"Dr. Dolittle",
+            "time":"MW 2:00-3:00",
+            "key":"32346356"
+         },
+         {
+            "name":"Princples of Artificial Intelligence",
+            "CRN":"83542",
+            "professor":"Dr. Turing",
+            "time":"RF 3:15-5:00",
+            "key":"87685492"
+         },
+         {
+            "name":"Underwater Basket Weaving",
+            "CRN":"82725",
+            "professor":"Ms. Thatcher",
+            "time":"MF 8:15-9:30",
+            "key":"98983953"
+         },
+         {
+            "name":"Fundamentals of Literature",
+            "CRN":"98739",
+            "professor":"Dr. Robotnik",
+            "time":"M 2:00-3:15",
+            "key":"97538823"
+         }
+      ]
+   }
+}
+

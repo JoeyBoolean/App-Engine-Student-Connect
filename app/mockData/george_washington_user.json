@@ -1,0 +1,40 @@
+{"user":
+   {
+      "name":"George Washington",
+      "image":"url.com/324234",
+      "id":"1231242345"
+   }
+
+   {"classes":
+      [
+         {
+            "name":"Senior Design",
+            "CRN":"62355",
+            "professor":"Dr. Dolittle",
+            "time":"MW 2:00-3:00",
+            "key":"32346356"
+         },
+         {
+            "name":"Princples of Artificial Intelligence",
+            "CRN":"83542",
+            "professor":"Dr. Turing",
+            "time":"RF 3:15-5:00",
+            "key":"87685492"
+         },
+         {
+            "name":"Rudimentary Espanol",
+            "CRN":"77623",
+            "professor":"Dr. Frankenstein",
+            "time":"WF 8:00-9:30am",
+            "key":"97833492"
+         },
+         {
+            "name":"Advanced Japanese",
+            "CRN":"81421",
+            "professor":"Mr. Roboto",
+            "time":"MWF 12:00-1:15",
+            "key":"87549232"
+         }
+      ]
+   }
+}

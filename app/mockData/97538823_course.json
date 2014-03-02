@@ -1,0 +1,17 @@
+{
+   "Messages":
+      [
+         {
+            "user":
+               {
+                  "name":"Honest Abe",
+                  "image":"url.com/978349",
+                  "id":"9736229709"
+               },
+            "message":"To be or not to be ...",
+            "message_id":"920123",
+            "date":"892459",
+            "class_name":"Fundamentals of Literature"
+         }
+   ]
+}
