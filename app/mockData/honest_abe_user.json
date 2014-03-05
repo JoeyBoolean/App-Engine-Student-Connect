@@ -3,9 +3,9 @@
       "name":"Honest Abe",
       "image":"url.com/978349",
       "id":"9736229709"
-   }
+   },
 
-   {"classes":
+   "classes":
       [
          {
             "name":"Senior Design",
@@ -36,6 +36,5 @@
             "key":"97538823"
          }
       ]
-   }
 }
 

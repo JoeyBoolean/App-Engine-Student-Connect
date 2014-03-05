@@ -34,6 +34,14 @@ App.config(function($routeProvider) {
     templateUrl: '/partials/main.html',
     resolve    : { 'messageService': 'messageService' },
   });
+  $routeProvider.when('/login', {
+    controller : 'LoginCtrl',
+    templateUrl: '/partials/tempLogin.html'
+  });
+  $routeProvider.when('/courses', {
+    controller : 'CoursesCtrl',
+    templateUrl: '/partials/tempCourses.html'
+  });
   $routeProvider.when('/invite', {
     controller : 'InsertCtrl',
     templateUrl: '/partials/insert.html',

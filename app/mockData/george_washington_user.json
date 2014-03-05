@@ -3,9 +3,9 @@
       "name":"George Washington",
       "image":"url.com/324234",
       "id":"1231242345"
-   }
+   },
 
-   {"classes":
+   "classes":
       [
          {
             "name":"Senior Design",
@@ -36,5 +36,4 @@
             "key":"87549232"
          }
       ]
-   }
 }
