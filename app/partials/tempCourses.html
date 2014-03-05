@@ -3,7 +3,7 @@
 <h3>Classes</h3>
 <br>
 <div ng-repeat="class in userData.classes">
-<span>{{class.name}}</span><br>
+<a ng-href="/#/messages/{{class.key}}">{{class.name}}</a><br>
 <span>{{class.CRN}}</span><br>
 <span>{{class.professor}}</span><br>
 <span>{{class.time}}</span><br>

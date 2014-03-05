@@ -42,6 +42,10 @@ App.config(function($routeProvider) {
     controller : 'CoursesCtrl',
     templateUrl: '/partials/tempCourses.html'
   });
+  $routeProvider.when('/messages/:id', {
+    controller : 'MessagesCtrl',
+    templateUrl: '/partials/tempMessages.html'
+  });
   $routeProvider.when('/invite', {
     controller : 'InsertCtrl',
     templateUrl: '/partials/insert.html',
