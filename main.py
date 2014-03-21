@@ -64,6 +64,13 @@ class DeleteHandler(RestHandler):
     r = json.loads(self.request.body)
     model.DeleteMessage(r['id'])
 
+class UserQueryHandler(RestHandler):
+
+  def get(self):
+    users = model.AllUsers()
+    r = [ AsDictUser(user) for user in users ]
+    self.SendJson(r)
+
 
 APP = webapp2.WSGIApplication([
     ('/rest/query', QueryHandler),
@@ -71,6 +78,7 @@ APP = webapp2.WSGIApplication([
     ('/rest/delete', DeleteHandler),
     ('/rest/update', UpdateHandler),
     ('/rest/insert_user', InsertUserHandler),
+    ('/rest/query-user', UserQueryHandler),
 ], debug=True)
 
 

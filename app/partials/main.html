@@ -1,8 +1,16 @@
 <h2>Message list</h2>
+<<<<<<< HEAD
+=======
+
+
+<div><h3>{{userData.first}} {{userData.last}} - {{userData.id}} </h3></div>
+
+>>>>>>> 3f213505b0af4d58a165967f30a644dc553eb7fc
 <button ng-click="invite()">Create a new message</button>
 <div class="well well-sm" ng-repeat="message in messages | orderBy:'last' | orderBy:'first'">
 	<div class="media">
-	<img class="img-rounded img-size pull-left" src="http://www.channelv.in/images/default-profile.jpg">
+	<div class="pull-left thumbnail"><span class="glyphicon glyphicon-user img-size"></span></div>
+	<!--<img class="img-rounded img-size pull-left thumbnail" src="http://www.channelv.in/images/default-profile.jpg"><!---->
 		<div class="media-body pull-left">
 
 			<div class="media-heading">
@@ -15,5 +23,4 @@
 	  		</div>
   		</div>
   	</div>
-  
 </div>

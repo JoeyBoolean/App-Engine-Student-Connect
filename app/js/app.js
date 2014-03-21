@@ -1,6 +1,6 @@
 'use strict';
 
-var App = angular.module('App', ['ngRoute']);
+var App = angular.module('App', ['ngRoute', 'ngCookies']);
 
 App.factory('myHttpInterceptor', function($rootScope, $q) {
   return {
@@ -22,10 +22,51 @@ App.factory('messageService', function($rootScope, $http, $q, $log) { //guestSer
   $http.get('rest/query')
   .success(function(data, status, headers, config) {
     $rootScope.messages = data;
+    //deferred.resolve();
+    $rootScope.status = '';
+  });
+  $http.get('rest/query-user')
+  .success(function(data, status, headers, config) {
+    $rootScope.usernames = data;
     deferred.resolve();
     $rootScope.status = '';
   });
   return deferred.promise;
+});
+
+App.factory('nameService', function($rootScope, $http, $q, $log) { //guestService
+  $rootScope.status = 'Retrieving name...';
+  var deferred = $q.defer();
+  $http.get('rest/query-name')
+  .success(function(data, status, headers, config) {
+    $rootScope.usernames = data;
+    deferred.resolve();
+    $rootScope.status = '';
+  });
+  return deferred.promise;
+});
+
+App.service('userNameService', function() {
+  var userInfo = {
+    id: '',
+    first: 'test',
+    last:'last'
+  };
+  return {
+    setInfo: function(value) {
+      userInfo.id = value.id;
+      userInfo.first = value.first;
+      userInfo.last = value.last;
+      console.log(value.last);
+    },
+    getInfo: function() {
+      return userInfo;
+    },
+    setName: function(value){
+      userInfo.first =value.first;
+      userInfo.last = value.last;
+    }
+  } 
 });
 
 App.config(function($routeProvider) {
@@ -56,27 +97,40 @@ App.config(function($httpProvider) {
   $httpProvider.interceptors.push('myHttpInterceptor');
 });
 
-App.controller('UserCtrl', function($scope, $rootScope, $log, $http, $routeParams, $location, $route) {
+App.controller('UserCtrl', function($scope, $rootScope, $log, $http, $routeParams, $location, $route, userNameService) {
 
   $scope.newUser = function(user) {
+
     var user = {
       first : $scope.first,
       last : $scope.last,
     };
+    userNameService.setName(user);
     $rootScope.status = 'Adding new user... ';
     $http.post('/rest/insert_user', user)
     .success(function(data, status, headers, config){
-      //$rootScope.user.push(data);
+      //$cookies.userId = data.id;
+      userNameService.setInfo(data);
+      var test = userNameService.getInfo()
+      console.log(test.first);
       $rootScope.status = 'success';
       $rootScope.status = '';
+      //console.log($cookies.userId);
     });
     $location.path('/home');
 
   };
 });
 
-App.controller('MainCtrl', function($scope, $rootScope, $log, $http, $routeParams, $location, $route) {
+App.controller('MainCtrl', function($scope, $rootScope, $log, $http, $routeParams, $location, $route, userNameService) {
 
+ 
+  var userData = userNameService.getInfo();
+  $scope.userData = userData;
+  console.log(userData);
+  
+  
+  //$rootScope.filt = userId;
   $scope.invite = function() {
     $location.path('/invite');
   };
@@ -101,12 +155,15 @@ App.controller('MainCtrl', function($scope, $rootScope, $log, $http, $routeParam
 
 });
 
-App.controller('InsertCtrl', function($scope, $rootScope, $log, $http, $routeParams, $location, $route) {
+App.controller('InsertCtrl', function($scope, $rootScope, $log, $http, $routeParams, $location, $route, userNameService) {
 
+  var userData = userNameService.getInfo();
+  $scope.userName = userData;
+  console.log(userData);
   $scope.submitInsert = function() {
     var message = {
-      first : $scope.first,
-      last : $scope.last, 
+      first : userData.first,
+      last : userData.last, 
       msg : $scope.msg, 
     };
     $rootScope.status = 'Creating...';
