@@ -50,13 +50,26 @@ App.service('userNameService', function() {
   var userInfo = {
     id: '',
     first: 'test',
-    last:'last'
+    last:'last',
+    courses:[
+      {
+        courseID: '',
+        crn: '34525',
+        name: 'Intro to World'
+      },
+      {
+        courseID: '12',
+        crn: '23455',
+        name: 'Fun Stuff'
+      }
+    ]
   };
   return {
     setInfo: function(value) {
       userInfo.id = value.id;
       userInfo.first = value.first;
-      userInfo.last = value.last;
+      userInfo.last = value.last
+      userInfo.courses = value.course
       console.log(value.last);
     },
     getInfo: function() {
@@ -69,10 +82,11 @@ App.service('userNameService', function() {
   } 
 });
 
+
 App.config(function($routeProvider) {
   $routeProvider.when('/home', {
     controller : 'MainCtrl',
-    templateUrl: '/partials/main.html',
+    templateUrl: '/partials/message.html',
     resolve    : { 'messageService': 'messageService' },
   });
   $routeProvider.when('/invite', {
@@ -83,6 +97,10 @@ App.config(function($routeProvider) {
     controller : 'UpdateCtrl',
     templateUrl: '/partials/update.html',
     resolve    : { 'messageService': 'messageService' },
+  });
+  $routeProvider.when('/courses', {
+    controller : 'CourseCtrl',
+    templateUrl: '/partials/courses.html',
   });
   $routeProvider.when('/user', {
     controller : 'UserCtrl',
@@ -111,6 +129,7 @@ App.controller('UserCtrl', function($scope, $rootScope, $log, $http, $routeParam
     .success(function(data, status, headers, config){
       //$cookies.userId = data.id;
       userNameService.setInfo(data);
+      console.log(data)
       var test = userNameService.getInfo()
       console.log(test.first);
       $rootScope.status = 'success';
@@ -121,6 +140,20 @@ App.controller('UserCtrl', function($scope, $rootScope, $log, $http, $routeParam
 
   };
 });
+
+App.controller('CourseCtrl', function($scope, $rootScope, $log, $http, $routeParams, $location, $route, userNameService) {
+
+  var userData = userNameService.getInfo();
+  $scope.userData = userData;
+  $scope.courses = userData.courses;
+  console.log(userData);
+
+  $scope.gotoCourse = function(course) {
+    console.log(course.name)
+  };
+
+});
+
 
 App.controller('MainCtrl', function($scope, $rootScope, $log, $http, $routeParams, $location, $route, userNameService) {
 

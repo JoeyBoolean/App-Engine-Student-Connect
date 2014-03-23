@@ -9,7 +9,14 @@ def AsDict(message):
   return {'id': message.key.id(), 'first': message.first, 'last': message.last, 'msg': message.msg}
 
 def AsDictUser(user):
-  return {'id': user.key.id(), 'first': user.first, 'last': user.last}
+  """
+  course is a list in the user object
+  """
+  course_list = model.QueryCourse(user.courses)
+  course_out = []
+  for course in course_list:
+    course_out.append({'crn': course.crn, 'name':course.name})
+  return {'id': user.key.id(), 'first': user.first, 'last': user.last, 'course': course_out}
 
 
 class RestHandler(webapp2.RequestHandler):
@@ -23,6 +30,13 @@ class RestHandler(webapp2.RequestHandler):
     self.response.headers['content-type'] = 'text/plain'
     self.response.write(json.dumps(r))
     
+
+class QueryCourseMessageHandler(RestHandler):
+
+  def get(self, course):
+    messages = model.CourseMessages(course)
+    r = [ AsDict(message) for message in messages]
+    self.SendJson(r)
 
 class QueryHandler(RestHandler):
 
@@ -41,7 +55,7 @@ class UpdateHandler(RestHandler):
     self.SendJson(r)
 
 
-class InsertHandler(RestHandler):
+class InsertMessageHandler(RestHandler):
 
   def post(self):
     r = json.loads(self.request.body)
@@ -53,7 +67,8 @@ class InsertUserHandler(RestHandler):
 
   def post(self):
     r = json.loads(self.request.body)
-    user = model.InsertUser(r['first'], r['last'])
+    course = model.AddCourseIfEmpty()
+    user = model.InsertUser(r['first'], r['last'], course)
     r = AsDictUser(user)
     self.SendJson(r)
 
@@ -74,9 +89,10 @@ class UserQueryHandler(RestHandler):
 
 APP = webapp2.WSGIApplication([
     ('/rest/query', QueryHandler),
-    ('/rest/insert', InsertHandler),
+    ('/rest/insert', InsertMessageHandler),
     ('/rest/delete', DeleteHandler),
     ('/rest/update', UpdateHandler),
+    ('/rest/message/<course>', QueryCourseMessageHandler),
     ('/rest/insert_user', InsertUserHandler),
     ('/rest/query-user', UserQueryHandler),
 ], debug=True)
