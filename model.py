@@ -64,6 +64,9 @@ def AddMessageToCourse(course_key, message):
   course.message_list = course_messages
   course.put()
 
+def InsertCourse(crn, name):
+  course = Course(crn=int(crn), name=name, message_list=[])
+  return course.put()
 
 def QueryCourse(course_key):
   if(course_key is None):

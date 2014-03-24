@@ -78,6 +78,9 @@ App.service('userNameService', function() {
     setName: function(value){
       userInfo.first =value.first;
       userInfo.last = value.last;
+    },
+    addCourse: function(value){
+      userInfo.courses.push(value);
     }
   } 
 });
@@ -101,6 +104,10 @@ App.config(function($routeProvider) {
   $routeProvider.when('/courses', {
     controller : 'CourseCtrl',
     templateUrl: '/partials/courses.html',
+  });
+  $routeProvider.when('/courses/add', {
+    controller : 'CourseCtrl',
+    templateUrl: '/partials/course_add.html',
   });
   $routeProvider.when('/user', {
     controller : 'UserCtrl',
@@ -149,7 +156,28 @@ App.controller('CourseCtrl', function($scope, $rootScope, $log, $http, $routePar
   console.log(userData);
 
   $scope.gotoCourse = function(course) {
-    console.log(course.name)
+    console.log(course.name);
+  };
+
+  $scope.addCourse = function() {
+    $location.path('/courses/add');
+  };
+
+  $scope.sendCourse = function() {
+    var course_data = {
+      id : userData.id,
+      crn : $scope.crn,
+      name : $scope.name
+    };
+    $rootScope.status = 'Adding Course....';
+    $http.post('/rest/insert_course', course_data)
+    .success(function(data, status, headers, config){
+      userNameService.addCourse(data);
+      var test = userNameService.getInfo();
+      console.log(test);
+      $rootScope.status = '';
+    });
+    $location.path('/courses');
   };
 
 });
