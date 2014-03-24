@@ -21,6 +21,10 @@
   <body>
   <div class="container">
     <h1>Student Connect Message List</h1> 
+    <div class="btn-group" ng-controller="NavController">
+          <button type="button" class="btn btn-default" ng-click=gotoUser()>User</button>
+          <button type="button" class="btn btn-default" ng-click=gotoCourses()>Courses</button>
+    </div>
     <pre class="status" ng-bind="status"></pre>
     <div ng-view></div>
   </div>

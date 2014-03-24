@@ -263,3 +263,13 @@ App.controller('UpdateCtrl', function($routeParams, $rootScope, $scope, $log, $h
 
 });
 
+App.controller('NavController', function($scope, $rootScope, $log, $http, $routeParams, $location, $route, userNameService) {
+
+  $rootScope.gotoUser = function() {
+    $location.path('/user');
+  };
+
+  $rootScope.gotoCourses = function() {
+    $location.path('/courses');
+  };
+});
