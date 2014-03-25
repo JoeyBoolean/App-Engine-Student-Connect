@@ -46,7 +46,7 @@ App.factory('nameService', function($rootScope, $http, $q, $log) { //guestServic
   return deferred.promise;
 });
 
-App.service('userNameService', function() {
+App.factory('userNameService', function($rootScope, $http, $q) {
   var userInfo = {
     id: '',
     first: 'test',
@@ -65,11 +65,37 @@ App.service('userNameService', function() {
     ]
   };
   return {
+    
+    retrieveInfo: function(value) {
+      var deferred = $q.defer();
+      if ( userInfo.id != value){
+
+        var u = '';
+        u = value;
+        var userID = {
+          user: u,
+          test: 'Test'
+        };
+        console.log(u);
+        console.log(userID);
+        $http.post('rest/query-user-id', userID)
+        .success(function(data, status, headers, config){
+          userInfo.id = data.id;
+          userInfo.first = data.first;
+          userInfo.last = data.last;
+          userInfo.courses = data.courses;
+          console.log(userInfo.courses)
+          console.log(userInfo.courses)
+        });
+      }
+      deferred.resolve();
+      return deferred.promise;
+    },
     setInfo: function(value) {
       userInfo.id = value.id;
       userInfo.first = value.first;
-      userInfo.last = value.last
-      userInfo.courses = value.course
+      userInfo.last = value.last;
+      userInfo.courses = value.courses;
       console.log(value.last);
     },
     getInfo: function() {
@@ -101,11 +127,11 @@ App.config(function($routeProvider) {
     templateUrl: '/partials/update.html',
     resolve    : { 'messageService': 'messageService' },
   });
-  $routeProvider.when('/courses', {
+  $routeProvider.when('/courses/:id', {
     controller : 'CourseCtrl',
     templateUrl: '/partials/courses.html',
   });
-  $routeProvider.when('/courses/add', {
+  $routeProvider.when('/courses/add/:id', {
     controller : 'CourseCtrl',
     templateUrl: '/partials/course_add.html',
   });
@@ -114,7 +140,7 @@ App.config(function($routeProvider) {
     templateUrl: '/partials/user.html',
   });
   $routeProvider.otherwise({
-    redirectTo : '/home'
+    redirectTo : '/user'
   });
 });
 
@@ -150,6 +176,9 @@ App.controller('UserCtrl', function($scope, $rootScope, $log, $http, $routeParam
 
 App.controller('CourseCtrl', function($scope, $rootScope, $log, $http, $routeParams, $location, $route, userNameService) {
 
+  var userID = $routeParams.id;
+  console.log(userID);
+  userNameService.retrieveInfo(userID);
   var userData = userNameService.getInfo();
   $scope.userData = userData;
   $scope.courses = userData.courses;
@@ -160,7 +189,7 @@ App.controller('CourseCtrl', function($scope, $rootScope, $log, $http, $routePar
   };
 
   $scope.addCourse = function() {
-    $location.path('/courses/add');
+    $location.path('/courses/add/' + userData.id);
   };
 
   $scope.sendCourse = function() {
@@ -177,7 +206,7 @@ App.controller('CourseCtrl', function($scope, $rootScope, $log, $http, $routePar
       console.log(test);
       $rootScope.status = '';
     });
-    $location.path('/courses');
+    $location.path('/courses/' + userData.id);
   };
 
 });
@@ -265,11 +294,12 @@ App.controller('UpdateCtrl', function($routeParams, $rootScope, $scope, $log, $h
 
 App.controller('NavController', function($scope, $rootScope, $log, $http, $routeParams, $location, $route, userNameService) {
 
+  var userData = userNameService.getInfo();
   $rootScope.gotoUser = function() {
     $location.path('/user');
   };
 
   $rootScope.gotoCourses = function() {
-    $location.path('/courses');
+    $location.path('/courses/' + userData.id);
   };
 });

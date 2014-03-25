@@ -37,6 +37,10 @@ class User(ndb.Model):
 def AllUsers():
   return User.query()
 
+def QueryUser(id):
+  user_key = ndb.Key(User, id)
+  return user_key.get()
+
 def UpdateUser(id, course_key):
   user_key = ndb.Key(User, id)
   user = user_key.get()
