@@ -22,7 +22,7 @@ def AsDictUser(user):
     print('\n\n')
     print(course_out)
     print('\n\n')
-  return {'id': user.key.id(), 'first': user.first, 'last': user.last, 'courses': course_out}
+  return {'id': user.key.id(), 'nameCheck': True, 'username': user.username, 'name': user.name, 'courses': course_out}
 
 def AsDictCourse(course):
   return {'courseID': course.key.id(), 'crn': course.crn, 'name': course.name}
@@ -76,7 +76,7 @@ class InsertUserHandler(RestHandler):
   def post(self):
     r = json.loads(self.request.body)
     course = model.AddCourseIfEmpty()
-    user = model.InsertUser(r['first'], r['last'], course)
+    user = model.InsertUser(r['username'], r['name'], r['password'], course)
     r = AsDictUser(user)
     self.SendJson(r)
 
@@ -92,6 +92,24 @@ class UserQueryHandler(RestHandler):
     users = model.AllUsers()
     r = [ AsDictUser(user) for user in users ]
     self.SendJson(r)
+
+class UserSigninHandler(RestHandler):
+
+  def post(self):
+    r = json.loads(self.request.body)
+    print('\n\n')
+    print(r)
+    print('\n\n')
+    check = model.CheckUser(r['username'], r['password'])
+    print check
+    if check is not None:
+      check_key = check.key.id()
+      user = model.QueryUser(check_key)
+      r = AsDictUser(user)
+    else:
+      r = {'userCheck': False}
+    self.SendJson(r)
+
 
 class UserIDQueryHandler(RestHandler):
 
@@ -121,6 +139,7 @@ APP = webapp2.WSGIApplication([
     ('/rest/message/<course>', QueryCourseMessageHandler),
     ('/rest/insert_user', InsertUserHandler),
     ('/rest/query-user', UserQueryHandler),
+    ('/rest/user-signin', UserSigninHandler),
     ('/rest/query-user-id', UserIDQueryHandler),
     ('/rest/insert_course', InsertCourseHandler),
 ], debug=True)

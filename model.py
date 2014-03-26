@@ -30,8 +30,10 @@ def DeleteMessage(id): #DeleteGuest
   key.delete()
 
 class User(ndb.Model):
-  first =ndb.StringProperty()
-  last = ndb.StringProperty()
+  username =ndb.StringProperty()
+  name = ndb.StringProperty()
+  password = ndb.StringProperty()
+  logged_in = ndb.BooleanProperty()
   courses = ndb.KeyProperty(repeated = True)
 
 def AllUsers():
@@ -41,6 +43,24 @@ def QueryUser(id):
   user_key = ndb.Key(User, id)
   return user_key.get()
 
+def CheckUser(username, password):
+  print(username, password)
+  users = User.query(User.username == username).fetch(1)
+  # for user in users:
+    # print(user.password)
+  # user = users
+  user = users.pop()
+  print('Dis Shit')
+  print(user)
+  if user is None:
+    return None
+  # user = user_key.get()
+  if(user.password == password):
+    user.logged_in = True;
+    user.put()
+    return user
+  return None
+
 def UpdateUser(id, course_key):
   user_key = ndb.Key(User, id)
   user = user_key.get()
@@ -49,10 +69,10 @@ def UpdateUser(id, course_key):
   user.courses = course_list
   user.put()
 
-def InsertUser(first, last, course):
+def InsertUser(username, name, password, course):
   course_list = []
   course_list.append(course)
-  user = User(first=first, last=last, courses=course_list)
+  user = User(username=username, name=name, password=password, logged_in=True, courses=course_list)
   user.put()
   return user
 

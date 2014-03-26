@@ -49,8 +49,9 @@ App.factory('nameService', function($rootScope, $http, $q, $log) { //guestServic
 App.factory('userNameService', function($rootScope, $http, $q) {
   var userInfo = {
     id: '',
-    first: 'test',
-    last:'last',
+    valid: false,
+    username: 'test',
+    name:'last',
     courses:[
       {
         courseID: '',
@@ -81,8 +82,9 @@ App.factory('userNameService', function($rootScope, $http, $q) {
         $http.post('rest/query-user-id', userID)
         .success(function(data, status, headers, config){
           userInfo.id = data.id;
-          userInfo.first = data.first;
-          userInfo.last = data.last;
+          userInfo.valid = data.valid;
+          userInfo.username = data.username;
+          userInfo.name = data.name;
           userInfo.courses = data.courses;
           console.log(userInfo.courses)
           console.log(userInfo.courses)
@@ -93,17 +95,18 @@ App.factory('userNameService', function($rootScope, $http, $q) {
     },
     setInfo: function(value) {
       userInfo.id = value.id;
-      userInfo.first = value.first;
-      userInfo.last = value.last;
+      userInfo.valid = value.nameCheck;
+      userInfo.username = value.username;
+      userInfo.name = value.name;
       userInfo.courses = value.courses;
-      console.log(value.last);
+      console.log(value.username);
     },
     getInfo: function() {
       return userInfo;
     },
     setName: function(value){
-      userInfo.first =value.first;
-      userInfo.last = value.last;
+      userInfo.username =value.username;
+      userInfo.name = value.name;
     },
     addCourse: function(value){
       userInfo.courses.push(value);
@@ -139,6 +142,14 @@ App.config(function($routeProvider) {
     controller : 'UserCtrl',
     templateUrl: '/partials/user.html',
   });
+  $routeProvider.when('/signup-fail', {
+    controller : 'UserCtrl',
+    templateUrl: '/partials/signup-fail.html',
+  });
+  $routeProvider.when('/signup', {
+    controller : 'UserCtrl',
+    templateUrl: '/partials/signup.html',
+  });
   $routeProvider.otherwise({
     redirectTo : '/user'
   });
@@ -150,26 +161,51 @@ App.config(function($httpProvider) {
 
 App.controller('UserCtrl', function($scope, $rootScope, $log, $http, $routeParams, $location, $route, userNameService) {
 
+  $scope.retrySignUp = function(){
+    $location.path('/signup');
+  };
+
+  $scope.signIn = function(){
+    var user_send = {
+      username : $scope.username,
+      password : $scope.password,
+    };
+
+    $http.post('/rest/user-signin', user_send)
+    .success(function(data, status, headers, config){
+      console.log(data);
+      if(data.nameCheck){
+        userNameService.setInfo(data);
+        $location.path('/courses/' + data.id);
+      }
+      else{
+        $location.path('/signup-fail');
+      }
+    });
+
+  };
+
   $scope.newUser = function(user) {
 
     var user = {
-      first : $scope.first,
-      last : $scope.last,
+      username : $scope.username,
+      name : $scope.name,
+      password : $scope.password,
     };
-    userNameService.setName(user);
+    // var success = false;
+    // userNameService.setName(user);
     $rootScope.status = 'Adding new user... ';
     $http.post('/rest/insert_user', user)
     .success(function(data, status, headers, config){
-      //$cookies.userId = data.id;
-      userNameService.setInfo(data);
+      // success = data.nameCheck;
       console.log(data)
-      var test = userNameService.getInfo()
-      console.log(test.first);
-      $rootScope.status = 'success';
-      $rootScope.status = '';
-      //console.log($cookies.userId);
+      if(data.nameCheck){
+        $location.path('/user');
+      }
+      else {
+        $location.path('/signup-fail');
+      }
     });
-    $location.path('/home');
 
   };
 });
