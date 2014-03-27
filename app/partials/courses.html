@@ -1,9 +1,8 @@
 <h2>Course list</h2>
-
 <h2>{{userData.name}}</h2>
 <div><h3>{{userData.username}} - {{userData.id}} </h3></div>
 
-<div class="well well-sm" ng-repeat="course in courses">
+<div class="well well-sm" ng-repeat="course in userData.courses">
 	<div class="media">
 	<div class="pull-left thumbnail"><span class="glyphicon glyphicon-user img-size"></span></div>
 	<!--<img class="img-rounded img-size pull-left thumbnail" src="http://www.channelv.in/images/default-profile.jpg"><!---->

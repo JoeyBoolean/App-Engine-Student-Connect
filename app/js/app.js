@@ -68,7 +68,7 @@ App.factory('userNameService', function($rootScope, $http, $q) {
   return {
     
     retrieveInfo: function(value) {
-      var deferred = $q.defer();
+      // var deferred = $q.defer();
       if ( userInfo.id != value){
 
         var u = '';
@@ -89,9 +89,10 @@ App.factory('userNameService', function($rootScope, $http, $q) {
           console.log(userInfo.courses)
           console.log(userInfo.courses)
         });
+        // userInfo.apply();
       }
-      deferred.resolve();
-      return deferred.promise;
+      // deferred.resolve();
+      return userInfo;
     },
     setInfo: function(value) {
       userInfo.id = value.id;
@@ -214,10 +215,9 @@ App.controller('CourseCtrl', function($scope, $rootScope, $log, $http, $routePar
 
   var userID = $routeParams.id;
   console.log(userID);
-  userNameService.retrieveInfo(userID);
-  var userData = userNameService.getInfo();
+  var userData = userNameService.retrieveInfo(userID);
+  // var userData = userNameService.getInfo();
   $scope.userData = userData;
-  $scope.courses = userData.courses;
   console.log(userData);
 
   $scope.gotoCourse = function(course) {
