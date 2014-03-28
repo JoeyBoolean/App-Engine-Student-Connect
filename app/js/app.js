@@ -141,7 +141,7 @@ App.config(function($routeProvider) {
   });
   $routeProvider.when('/user', {
     controller : 'UserCtrl',
-    templateUrl: '/partials/signin.html',
+    templateUrl: '/partials/user.html',
   });
   $routeProvider.when('/signup-fail', {
     controller : 'UserCtrl',
