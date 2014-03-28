@@ -1,7 +1,11 @@
 ***Student Connect App***
 Coolest app ever
 ----
-This is a version of the Student COnnect App for Wichita State University. The app is written in AngularJS, Bootstrap, and Python and powered by Google App Engine. 
+This is a version of the Student Connect App for Wichita State University. The app is written in AngularJS, Bootstrap, and Python and powered by Google App Engine. 
+
+An early demo of the functionality can be seen [in this video][1].
+
+[1]:http://youtu.be/WNblkDyTw_M
 
 To run the app 
 
