@@ -13,6 +13,10 @@ handlers:
   static_files: background.jpg
   upload: background\.jpg
 
+- url: /wsu\.png
+  static_files: wsu.png
+  upload: wsu\.png
+
 - url: /rest/.*
   script: main.APP
 
