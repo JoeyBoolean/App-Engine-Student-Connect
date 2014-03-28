@@ -338,4 +338,9 @@ App.controller('NavController', function($scope, $rootScope, $log, $http, $route
   $rootScope.gotoCourses = function() {
     $location.path('/courses/' + userData.id);
   };
+
+  $rootScope.gotoSignUp = function() {
+    $location.path('/signup')
+  }
+
 });

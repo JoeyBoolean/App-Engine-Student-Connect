@@ -4,15 +4,15 @@
 
 <div class="well well-sm" ng-repeat="course in userData.courses">
 	<div class="media">
-	<div class="pull-left thumbnail"><span class="glyphicon glyphicon-user img-size"></span></div>
-	<!--<img class="img-rounded img-size pull-left thumbnail" src="http://www.channelv.in/images/default-profile.jpg"><!---->
+	  		<span class="glyphicon glyphicon-chevron-right pull-right"></span>
+	<!-- <div class="pull-left thumbnail" src="head.jpg"></div> -->
+	<img class="img-rounded img-size pull-left thumbnail black" src="wsu.png">
 		<div class="media-body pull-left">
 
 			<div class="media-heading">
-				{{ $index + 1 }}. <b>{{ course.crn }} </b>
+				<b>{{ course.name }} </b>
 			</div>
-			<p> {{course.name}}</p>
-	  			
+			<p> CRN: {{course.crn}}</p>
 	  		<button class="btn btn-info btn-sm"ng-click="gotoCourse(course)">{{course.name}}</button>
   		</div>
   	</div>

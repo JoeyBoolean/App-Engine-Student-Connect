@@ -1,5 +1,7 @@
 body {
-	padding: 40px 15px;
+	padding-top: 50px;
+	padding-bottom: 50px;
+	/*text-align: center;*/
 }
 .status {
   color: blue;
@@ -7,7 +9,41 @@ body {
   height: 1em;
 }
 
+.starter-template {
+  padding: 40px 15px;
+  text-align: center;
+}
+
 .img-size{
- width: 5em;
- height: 5em;
+ width: 6em;
+ height: 6em;
+}
+
+.center {
+	text-align:center;
+}
+
+.black{
+	color:black;
+}
+
+.left{
+    display:inline-block;
+    vertical-align:top;
+    margin-left:.5em;
+    margin-top:0px;
+}
+.name{
+    margin-top:0px;
+    color:gray;
+}
+.gray{
+	color:gray;
+}
+.date{
+	color:gray;
+	font-size:.75em;
+}
+.yellow{
+	color:#D3D313;
 }

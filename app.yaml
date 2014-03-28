@@ -9,6 +9,14 @@ handlers:
   static_files: favicon.ico
   upload: favicon\.ico
 
+- url: /head\.jpg
+  static_files: head.jpg
+  upload: head\.jpg
+
+- url: /wsu\.png
+  static_files: wsu.png
+  upload: wsu\.png
+
 - url: /rest/.*
   script: main.APP
 
