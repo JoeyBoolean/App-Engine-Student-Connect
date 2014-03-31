@@ -3,8 +3,9 @@ from google.appengine.ext import ndb
 class Message(ndb.Model): #Guest
   first = ndb.StringProperty()
   last = ndb.StringProperty()
+  userKey = ndb.KeyProperty()
   msg = ndb.StringProperty()
-
+  time = ndb.DateTimeProperty(auto_now_add)
 
 def AllMessages(): #AllGuests
   return Message.query()
@@ -20,7 +21,7 @@ def UpdateMessage(id, first, last, msg): #UpdateGuest
 
 
 def InsertMessage(first, last, msg): #InsertGueset
-  message = Message(first=first, last=last, msg=msg)
+  message = Message(userKey=userKey, msg=msg)
   message.put()
   return message
 
@@ -81,10 +82,10 @@ class Course(ndb.Model):
   name = ndb.StringProperty()
   message_list = ndb.KeyProperty(repeated = True)
 
-def AddMessageToCourse(course_key, message):
+def AddMessageToCourse(course_key, message_key):
   course = course_key.get()
   course_messages = course.message_list
-  course_messages.append(message)
+  course_messages.append(message_key)
   course.message_list = course_messages
   course.put()
 

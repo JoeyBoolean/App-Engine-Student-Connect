@@ -67,8 +67,12 @@ class InsertMessageHandler(RestHandler):
 
   def post(self):
     r = json.loads(self.request.body)
-    message = model.InsertMessage(r['first'], r['last'], r['msg'])
-    r = AsDict(message)
+    course = model.QueryCourse(int(r['courseKey']))
+    user = model.QueryUser(int(r['userKey']))
+    message = model.InsertMessage(user.key.id(), r['msg'])
+    return_msg = model.AddMessageToCourse(course.key.id(), message.key.id())
+    # r = AsDict(message)
+    r = {'msgID': message.key.id, 'time':message.time}
     self.SendJson(r)
 
 class InsertUserHandler(RestHandler):
