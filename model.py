@@ -23,8 +23,8 @@ def UpdateMessage(id, first, last, msg): #UpdateGuest
 
 def InsertMessage(userKey, msg): #InsertGueset
   message = Message(userKey=userKey, msg=msg)
-  message.put()
-  return message
+  r = message.put()
+  return r
 
 
 def DeleteMessage(id): #DeleteGuest
@@ -93,6 +93,10 @@ def AddMessageToCourse(course_key, message_key):
 def InsertCourse(crn, name):
   course = Course(crn=int(crn), name=name, message_list=[])
   return course.put()
+
+def QuerySingleCourse(course_key):
+  course = ndb.Key(Course, course_key)
+  return course
 
 def QueryCourse(course_key):
   if(course_key is None):

@@ -37,15 +37,15 @@ App.factory('messageService', function($rootScope, $http, $q, $log) { //guestSer
 App.factory('courseService', function($rootScope, $http, $q, $log, courseDataService, userNameService) { //guestService
   // $rootScope.status = 'Retrieving name...';
   var userData = userNameService.getInfo();
-  // var deferred = $q.defer();
+  var deferred = $q.defer();
   // console.log(userData.courses);
   $http.post('rest/query-course-msg', userData.courses)
   .success(function(data, status, headers, config) {
-    console.log(data);
+    console.log('Success: ' + data);
     courseDataService.setCourseData(data);
     // $rootScope.usernames = data;
     deferred.resolve();
-    console.log('Done resolving')
+    console.log('Done resolving');
   });
   return deferred.promise;
 });
@@ -172,10 +172,15 @@ App.config(function($routeProvider) {
     controller : 'UserCtrl',
     templateUrl: '/partials/signup.html',
   });
+  $routeProvider.when('/user/:id/course/:courseKey/add',{
+    controller : 'MessageCtrl',
+    templateUrl: '/partials/coursemsg-add.html',
+    // resolve    : { 'courseService': 'courseService'},
+  });
   $routeProvider.when('/user/:id/course/:courseKey',{
     controller : 'MessageCtrl',
     templateUrl: '/partials/coursemsg.html',
-    // resolve    : { 'courseService': 'courseService'},
+    resolve    : { 'courseService': 'courseService'},
   });
   $routeProvider.otherwise({
     redirectTo : '/user'
@@ -286,7 +291,9 @@ App.controller('MessageCtrl', function($scope, $rootScope, $log, $http, $routePa
   // var msgData = courseData.courses[0].messages[0];
   // var userData = userNameService.getInfo();
   $scope.userData = userData;
-  console.log(userData);
+  $scope.courseData = courseData;
+  $scope.courseKey = courseKey;
+  console.log(courseData);
 
   $scope.printCourseData = function() {
     // console.log('value: ' + value);
@@ -295,24 +302,23 @@ App.controller('MessageCtrl', function($scope, $rootScope, $log, $http, $routePa
   };
 
   $scope.addMessage = function() {
-    $location.path('/user/' + userData.id + '/course/' + courseData.courseKey[courseKey] + '/add');
+    $location.path('/user/' + userID + '/course/' + courseKey + '/add');
   };
 
-  $scope.sendMessage = function() {
+  $scope.sendMessage = function(value) {
     var message_data = {
       userKey : userData.id,
       courseKey : courseKey,
-      msg : $scope.message
+      msg : value
     };
-    $rootScope.status = 'Adding Course....';
-    $http.post('/rest/insert_message', message_data)
+    console.log(message_data);
+    $http.post('/rest/insert-message', message_data)
     .success(function(data, status, headers, config){
-      courseDataService.addMessage(data);
-      var test = userNameService.getInfo();
-      console.log(test);
-      $rootScope.status = '';
+      // courseDataService.addMessage(data);
+      console.log(data);
+
     });
-    $location.path('/user/' + userData.id + '/course/' + courseData.courseKey[courseKey] );
+    $location.path('/user/' + userData.id + '/course/' + courseKey );
   };
 
 });

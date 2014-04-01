@@ -4,10 +4,9 @@ import time
 
 import model
 
-
 def AsDict(message):
   user = model.QueryUser(message.userKey)
-  r = {'id': message.key.id(), 'username': user.username, 'name': user.name, 'msg': message.msg, 'time':message.time}
+  r = {'id': message.key.id(), 'username': user.username, 'name': user.name, 'msg': message.msg, 'time':str(message.time)}
   r.append({'id': 1234, 'username': 'Student Connect', 'name': 'Student Connect', 'msg': 'Hello', 'time':12323})
   return r
 
@@ -52,10 +51,9 @@ class QueryCourseMessageHandler(RestHandler):
       print( course )
       print('\n')
       messages = model.CourseMessages(course['courseKey'])
-      # if messages:
-        # msg = [ AsDict(message) for message in messages]
-      # else:
-      msg = [{'id': 1234, 'username': 'Student Connect', 'name': 'Student Connect', 'msg': 'Hello', 'time':12323}]
+      print(messages)
+      if messages:
+        msg = [ AsDict(message) for message in messages]
       course_dict = {'course': course['courseKey'], 'messages':msg}
       r['courses'].append(course_dict)
     self.SendJson(r)
@@ -81,12 +79,14 @@ class InsertMessageHandler(RestHandler):
 
   def post(self):
     r = json.loads(self.request.body)
-    course = model.QueryCourse(int(r['courseKey']))
+    course = model.QuerySingleCourse(int(r['courseKey']))
     user = model.QueryUser(int(r['userKey']))
-    message = model.InsertMessage(user.key.id(), r['msg'])
-    return_msg = model.AddMessageToCourse(course.key.id(), message.key.id())
+    message = model.InsertMessage(user.key, r['msg'])
+    return_msg = model.AddMessageToCourse(course, message)
     # r = AsDict(message)
-    r = {'msgID': message.key.id, 'time':message.time}
+    msg = message.get()
+    time = str(msg.time)
+    r = {'msgID': msg.key.id(), 'time':time}
     self.SendJson(r)
 
 class InsertUserHandler(RestHandler):
@@ -151,7 +151,7 @@ class InsertCourseHandler(RestHandler):
 
 APP = webapp2.WSGIApplication([
     ('/rest/query', QueryHandler),
-    ('/rest/insert', InsertMessageHandler),
+    ('/rest/insert-message', InsertMessageHandler),
     ('/rest/delete', DeleteHandler),
     ('/rest/update', UpdateHandler),
     ('/rest/message/<course>', QueryCourseMessageHandler),
