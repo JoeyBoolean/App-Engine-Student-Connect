@@ -281,13 +281,14 @@ App.controller('CourseCtrl', function($scope, $rootScope, $log, $http, $routePar
 
 });
 
-App.controller('MessageCtrl', function($scope, $rootScope, $log, $http, $routeParams, $location, $route, userNameService, courseDataService) {
+App.controller('MessageCtrl', function($scope, $rootScope, $log, $http, $routeParams, $location, $route, userNameService, courseService) {
 
   var userID = $routeParams.id;
   var courseKey = $routeParams.courseKey;
   console.log(userID);
   var userData = userNameService.retrieveInfo(userID);
-  var courseData = courseDataService.getCourseData();
+  var courseData = courseService.retrieveMessages(courseKey);
+  // var courseData = courseDataService.getCourseData();
   // var msgData = courseData.courses[0].messages[0];
   // var userData = userNameService.getInfo();
   $scope.userData = userData;
