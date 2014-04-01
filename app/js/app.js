@@ -34,16 +34,37 @@ App.factory('messageService', function($rootScope, $http, $q, $log) { //guestSer
   return deferred.promise;
 });
 
-App.factory('nameService', function($rootScope, $http, $q, $log) { //guestService
-  $rootScope.status = 'Retrieving name...';
-  var deferred = $q.defer();
-  $http.get('rest/query-name')
+App.factory('courseService', function($rootScope, $http, $q, $log, courseDataService, userNameService) { //guestService
+  // $rootScope.status = 'Retrieving name...';
+  var userData = userNameService.getInfo();
+  // var deferred = $q.defer();
+  // console.log(userData.courses);
+  $http.post('rest/query-course-msg', userData.courses)
   .success(function(data, status, headers, config) {
-    $rootScope.usernames = data;
+    console.log(data);
+    courseDataService.setCourseData(data);
+    // $rootScope.usernames = data;
     deferred.resolve();
-    $rootScope.status = '';
+    console.log('Done resolving')
   });
   return deferred.promise;
+});
+
+App.factory('courseDataService', function($rootScope, $http, $q){
+  var courseData;
+
+  return {
+
+    setCourseData: function(value){
+      courseData = value;
+    },
+
+    getCourseData: function(){
+      return courseData;
+    }
+
+  }
+
 });
 
 App.factory('userNameService', function($rootScope, $http, $q) {
@@ -54,12 +75,12 @@ App.factory('userNameService', function($rootScope, $http, $q) {
     name:'last',
     courses:[
       {
-        courseID: '',
+        courseKey: '',
         crn: '34525',
         name: 'Intro to World'
       },
       {
-        courseID: '12',
+        courseKey: '12',
         crn: '23455',
         name: 'Fun Stuff'
       }
@@ -151,6 +172,11 @@ App.config(function($routeProvider) {
     controller : 'UserCtrl',
     templateUrl: '/partials/signup.html',
   });
+  $routeProvider.when('/user/:id/course/:courseKey',{
+    controller : 'MessageCtrl',
+    templateUrl: '/partials/coursemsg.html',
+    // resolve    : { 'courseService': 'courseService'},
+  });
   $routeProvider.otherwise({
     redirectTo : '/user'
   });
@@ -221,7 +247,10 @@ App.controller('CourseCtrl', function($scope, $rootScope, $log, $http, $routePar
   console.log(userData);
 
   $scope.gotoCourse = function(course) {
-    console.log(course.name);
+    console.log(course);
+    console.log('/user/' + userData.id + '/course/' + course.courseKey);
+
+    $location.path('/user/' + userData.id + '/course/' + course.courseKey)
   };
 
   $scope.addCourse = function() {
@@ -247,6 +276,46 @@ App.controller('CourseCtrl', function($scope, $rootScope, $log, $http, $routePar
 
 });
 
+App.controller('MessageCtrl', function($scope, $rootScope, $log, $http, $routeParams, $location, $route, userNameService, courseDataService) {
+
+  var userID = $routeParams.id;
+  var courseKey = $routeParams.courseKey;
+  console.log(userID);
+  var userData = userNameService.retrieveInfo(userID);
+  var courseData = courseDataService.getCourseData();
+  // var msgData = courseData.courses[0].messages[0];
+  // var userData = userNameService.getInfo();
+  $scope.userData = userData;
+  console.log(userData);
+
+  $scope.printCourseData = function() {
+    // console.log('value: ' + value);
+    // console.log('msgData: ' + msgData);
+    console.log(courseData.courses[0].messages[0].name);
+  };
+
+  $scope.addMessage = function() {
+    $location.path('/user/' + userData.id + '/course/' + courseData.courseKey[courseKey] + '/add');
+  };
+
+  $scope.sendMessage = function() {
+    var message_data = {
+      userKey : userData.id,
+      courseKey : courseKey,
+      msg : $scope.message
+    };
+    $rootScope.status = 'Adding Course....';
+    $http.post('/rest/insert_message', message_data)
+    .success(function(data, status, headers, config){
+      courseDataService.addMessage(data);
+      var test = userNameService.getInfo();
+      console.log(test);
+      $rootScope.status = '';
+    });
+    $location.path('/user/' + userData.id + '/course/' + courseData.courseKey[courseKey] );
+  };
+
+});
 
 App.controller('MainCtrl', function($scope, $rootScope, $log, $http, $routeParams, $location, $route, userNameService) {
 

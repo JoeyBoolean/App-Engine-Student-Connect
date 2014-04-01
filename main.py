@@ -6,7 +6,10 @@ import model
 
 
 def AsDict(message):
-  return {'id': message.key.id(), 'first': message.first, 'last': message.last, 'msg': message.msg}
+  user = model.QueryUser(message.userKey)
+  r = {'id': message.key.id(), 'username': user.username, 'name': user.name, 'msg': message.msg, 'time':message.time}
+  r.append({'id': 1234, 'username': 'Student Connect', 'name': 'Student Connect', 'msg': 'Hello', 'time':12323})
+  return r
 
 def AsDictUser(user):
   """ 
@@ -18,7 +21,7 @@ def AsDictUser(user):
   print('\n\n')
   course_out = []
   for course in course_list:
-    course_out.append({'crn': course.crn, 'name':course.name})
+    course_out.append({'courseKey':course.key.id(), 'crn': course.crn, 'name':course.name})
     print('\n\n')
     print(course_out)
     print('\n\n')
@@ -41,9 +44,20 @@ class RestHandler(webapp2.RequestHandler):
 
 class QueryCourseMessageHandler(RestHandler):
 
-  def get(self, course):
-    messages = model.CourseMessages(course)
-    r = [ AsDict(message) for message in messages]
+  def post(self):
+    courses = json.loads(self.request.body)
+    r = {'courses':[]}
+    for course in courses:
+      print('\n')
+      print( course )
+      print('\n')
+      messages = model.CourseMessages(course['courseKey'])
+      # if messages:
+        # msg = [ AsDict(message) for message in messages]
+      # else:
+      msg = [{'id': 1234, 'username': 'Student Connect', 'name': 'Student Connect', 'msg': 'Hello', 'time':12323}]
+      course_dict = {'course': course['courseKey'], 'messages':msg}
+      r['courses'].append(course_dict)
     self.SendJson(r)
 
 class QueryHandler(RestHandler):
@@ -145,6 +159,7 @@ APP = webapp2.WSGIApplication([
     ('/rest/query-user', UserQueryHandler),
     ('/rest/user-signin', UserSigninHandler),
     ('/rest/query-user-id', UserIDQueryHandler),
+    ('/rest/query-course-msg', QueryCourseMessageHandler),
     ('/rest/insert_course', InsertCourseHandler),
 ], debug=True)
 

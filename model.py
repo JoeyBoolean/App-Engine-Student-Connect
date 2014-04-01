@@ -5,14 +5,15 @@ class Message(ndb.Model): #Guest
   last = ndb.StringProperty()
   userKey = ndb.KeyProperty()
   msg = ndb.StringProperty()
-  time = ndb.DateTimeProperty(auto_now_add)
+  time = ndb.DateTimeProperty(auto_now_add=True)
 
 def AllMessages(): #AllGuests
   return Message.query()
 
 
 def CourseMessages(course_key):
-  return Message.query(ancestor=course_key)
+  course = ndb.Key(Course, course_key)
+  return Message.query(ancestor=course).order(Message.time)
 
 def UpdateMessage(id, first, last, msg): #UpdateGuest
   message = Message(id=id, first=first, last=last, msg=msg)
@@ -20,7 +21,7 @@ def UpdateMessage(id, first, last, msg): #UpdateGuest
   return message
 
 
-def InsertMessage(first, last, msg): #InsertGueset
+def InsertMessage(userKey, msg): #InsertGueset
   message = Message(userKey=userKey, msg=msg)
   message.put()
   return message
@@ -97,6 +98,7 @@ def QueryCourse(course_key):
   if(course_key is None):
     print('\nDoing this\n')
     course_key = AddCourseIfEmpty()
+    # msgKey = InsertMessage()
 
   course_list = []
   for course in course_key:
