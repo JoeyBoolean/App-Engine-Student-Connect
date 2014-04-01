@@ -37,17 +37,17 @@ App.factory('messageService', function($rootScope, $http, $q, $log) { //guestSer
 App.factory('courseService', function($rootScope, $http, $q, $log, courseDataService, userNameService) { //guestService
   // $rootScope.status = 'Retrieving name...';
   var userData = userNameService.getInfo();
-  // var deferred = $q.defer();
-  // console.log(userData.courses);
-  $http.post('rest/query-course-msg', userData.courses)
-  .success(function(data, status, headers, config) {
-    console.log(data);
-    courseDataService.setCourseData(data);
-    // $rootScope.usernames = data;
-    deferred.resolve();
-    console.log('Done resolving')
-  });
-  return deferred.promise;
+
+  return {
+  retrieveMessages: function(value){ 
+    var course = {course_key: value};
+      $http.post('rest/query-course-msg', course)
+      .success(function(data, status, headers, config) {
+        console.log(data);
+        courseDataService.setCourseData(data);
+      })
+    }
+  }
 });
 
 App.factory('courseDataService', function($rootScope, $http, $q){
@@ -276,13 +276,14 @@ App.controller('CourseCtrl', function($scope, $rootScope, $log, $http, $routePar
 
 });
 
-App.controller('MessageCtrl', function($scope, $rootScope, $log, $http, $routeParams, $location, $route, userNameService, courseDataService) {
+App.controller('MessageCtrl', function($scope, $rootScope, $log, $http, $routeParams, $location, $route, userNameService, courseService) {
 
   var userID = $routeParams.id;
   var courseKey = $routeParams.courseKey;
   console.log(userID);
   var userData = userNameService.retrieveInfo(userID);
-  var courseData = courseDataService.getCourseData();
+  var courseData = courseService.retrieveMessages(courseKey);
+  // var courseData = courseDataService.getCourseData();
   // var msgData = courseData.courses[0].messages[0];
   // var userData = userNameService.getInfo();
   $scope.userData = userData;

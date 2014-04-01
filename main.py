@@ -45,19 +45,9 @@ class RestHandler(webapp2.RequestHandler):
 class QueryCourseMessageHandler(RestHandler):
 
   def post(self):
-    courses = json.loads(self.request.body)
-    r = {'courses':[]}
-    for course in courses:
-      print('\n')
-      print( course )
-      print('\n')
-      messages = model.CourseMessages(course['courseKey'])
-      # if messages:
-        # msg = [ AsDict(message) for message in messages]
-      # else:
-      msg = [{'id': 1234, 'username': 'Student Connect', 'name': 'Student Connect', 'msg': 'Hello', 'time':12323}]
-      course_dict = {'course': course['courseKey'], 'messages':msg}
-      r['courses'].append(course_dict)
+    course = json.loads(self.request.body)
+    msg = [{'id': 1234, 'username': 'Student Connect', 'name': 'Student Connect', 'msg': 'Hello', 'time':12323}]
+    r = {'course': course['courseKey'], 'messages':msg}
     self.SendJson(r)
 
 class QueryHandler(RestHandler):
