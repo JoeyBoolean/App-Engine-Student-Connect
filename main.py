@@ -5,9 +5,13 @@ import time
 import model
 
 def AsDict(message):
-  user = model.QueryUser(message.userKey)
+  message = message.get()
+  print('\n Message As Dict\n')
+  print(message)
+  print(message.userKey)
+  user = message.userKey.get()
   r = {'id': message.key.id(), 'username': user.username, 'name': user.name, 'msg': message.msg, 'time':str(message.time)}
-  r.append({'id': 1234, 'username': 'Student Connect', 'name': 'Student Connect', 'msg': 'Hello', 'time':12323})
+  # r.append({'id': 1234, 'username': 'Student Connect', 'name': 'Student Connect', 'msg': 'Hello', 'time':12323})
   return r
 
 def AsDictUser(user):
@@ -55,6 +59,7 @@ class QueryCourseMessageHandler(RestHandler):
       if messages:
         msg = [ AsDict(message) for message in messages]
       course_dict = {'course': course['courseKey'], 'messages':msg}
+      print course_dict
       r['courses'].append(course_dict)
     self.SendJson(r)
 

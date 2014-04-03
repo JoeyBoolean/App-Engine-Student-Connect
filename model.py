@@ -12,8 +12,15 @@ def AllMessages(): #AllGuests
 
 
 def CourseMessages(course_key):
-  course = ndb.Key(Course, course_key)
-  return Message.query(ancestor=course).order(Message.time)
+  msg = Message.query()
+  print ('\n\n course_key\n')
+  print(course_key)
+  course = QuerySingleCourse(int(course_key))
+  course = course.get()
+  r = course.message_list
+  print('\n Message List \n')
+  print r
+  return r
 
 def UpdateMessage(id, first, last, msg): #UpdateGuest
   message = Message(id=id, first=first, last=last, msg=msg)

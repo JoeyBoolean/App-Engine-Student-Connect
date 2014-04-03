@@ -61,6 +61,11 @@ App.factory('courseDataService', function($rootScope, $http, $q){
 
     getCourseData: function(){
       return courseData;
+    },
+
+    retrieveMessages: function(value) {
+
+      return courseData;
     }
 
   }
@@ -281,14 +286,14 @@ App.controller('CourseCtrl', function($scope, $rootScope, $log, $http, $routePar
 
 });
 
-App.controller('MessageCtrl', function($scope, $rootScope, $log, $http, $routeParams, $location, $route, userNameService, courseService) {
+App.controller('MessageCtrl', function($scope, $rootScope, $log, $http, $routeParams, $location, $route, userNameService, courseDataService) {
 
   var userID = $routeParams.id;
   var courseKey = $routeParams.courseKey;
   console.log(userID);
   var userData = userNameService.retrieveInfo(userID);
-  var courseData = courseService.retrieveMessages(courseKey);
-  // var courseData = courseDataService.getCourseData();
+  // var courseData = courseService.retrieveMessages(courseKey);
+  var courseData = courseDataService.getCourseData();
   // var msgData = courseData.courses[0].messages[0];
   // var userData = userNameService.getInfo();
   $scope.userData = userData;
